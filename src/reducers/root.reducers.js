@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 
+import { postReducer } from './Posts/post.reducers'
+
 const combinedReducers = {
-  dummy: () => 'hello world',
+  post: postReducer,
 }
 export default combineReducers(combinedReducers)

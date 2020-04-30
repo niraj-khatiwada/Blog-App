@@ -5,29 +5,21 @@ import { connect } from 'react-redux'
 
 import { createStructuredSelector } from 'reselect'
 import {
-  selectFetchedData,
+  fetchedDataArray,
   selectIsFetching,
-  selectErrorMessage,
-} from '../reducers/Posts/posts.selectors'
+} from '../reducers/Posts/posts.selectors.jsx'
 
-function PostList({ startAxiosFetch, fetchedData, isFetching }) {
+function PostList({ startAxiosFetch, fetchedDataArray, isFetching }) {
   useEffect(() => {
-    startAxiosFetch()
-  }, [startAxiosFetch])
+    // startAxiosFetch()
+  }, [isFetching])
 
-  const postsArray = fetchedData.map((item) => (
-    <div className="row">
-      <div className="col">{item.title}</div>
-    </div>
-  ))
-
-  return <div className="container">{postsArray}</div>
+  return <div className="container">{fetchedDataArray} </div>
 }
 
 const mapStateToProps = createStructuredSelector({
+  fetchedDataArray: fetchedDataArray,
   isFetching: selectIsFetching,
-  fetchedData: selectFetchedData,
-  errorMessage: selectErrorMessage,
 })
 const mapDispatchToProps = (dispatch) => ({
   startAxiosFetch: () => dispatch(axiosFetch()),

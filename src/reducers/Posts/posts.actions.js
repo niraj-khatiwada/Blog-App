@@ -23,5 +23,3 @@ export const axiosFetch = () => {
       .catch((err) => dispatch(fetchFailure(err)))
   }
 }
-
-export const toggleFetch = () => ({ type: 'TOGGLE_FETCH' })

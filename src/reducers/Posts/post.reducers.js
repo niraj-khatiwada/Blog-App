@@ -4,8 +4,8 @@ const INITIAL_STATE = {
 
 export const postReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'IS_FETCHING':
-      return { ...state, isFetching: true }
+    case 'TOGGLE_FETCH':
+      return { ...state, isFetching: !state.isFetching }
     default:
       return state
   }

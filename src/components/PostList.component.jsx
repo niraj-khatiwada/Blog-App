@@ -1,19 +1,23 @@
 import React from 'react'
 
 import { connect } from 'react-redux'
-import { isFetching } from '../reducers/Posts/posts.actions'
+import { toggleFetch } from '../reducers/Posts/posts.actions'
 
-function PostList({ isFetching }) {
-  console.log(isFetching)
+function PostList({ isFetching, toggleFetch }) {
   return (
     <div>
-      <button onClick={() => isFetching}>click</button>
+      <h1>{`${isFetching}`}</h1>
+      <button onClick={() => toggleFetch()}>click</button>
     </div>
   )
 }
 
-const mapDipatchToProps = (state) => ({
-  isFetching: isFetching(state),
+const mapStateToProps = (state) => ({
+  isFetching: state.post.isFetching,
 })
 
-export default connect(null, mapDipatchToProps)(PostList)
+const mapDispatchToProps = (dispatch) => ({
+  toggleFetch: () => dispatch(toggleFetch()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)

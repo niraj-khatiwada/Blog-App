@@ -8,12 +8,19 @@ import {
   fetchFailure,
 } from '../reducers/Posts/posts.actions'
 
-function PostList({ isFetching, toggleFetch, fetchData, err, fetchError }) {
+function PostList({
+  isFetching,
+  toggleFetch,
+  fetchData,
+  err,
+  fetchError,
+  fetchedData,
+}) {
   useEffect(() => {
     const axiosFetch = async () => {
       await axios
-        .get('https://jsonplaceholder.typicode.com/poss')
-        .then((res) => fetchData(res.data.slice(0, 10)))
+        .get('https://jsonplaceholder.typicode.com/posts')
+        .then(async (res) => await fetchData(res.data.slice(0, 1)))
         .catch((err) => fetchError(err.response.status))
     }
     axiosFetch()
@@ -21,6 +28,7 @@ function PostList({ isFetching, toggleFetch, fetchData, err, fetchError }) {
 
   return (
     <div>
+      <h1>{fetchedData[0].id}</h1>
       <button onClick={() => toggleFetch()}>click</button>
     </div>
   )

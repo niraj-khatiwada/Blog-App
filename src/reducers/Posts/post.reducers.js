@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   isFetching: false,
-  fetchedData: null,
+  fetchedData: [],
   errMessage: null,
 }
 

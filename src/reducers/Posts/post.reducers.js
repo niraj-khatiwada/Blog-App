@@ -1,17 +1,17 @@
 const INITIAL_STATE = {
   isFetching: false,
   fetchedData: null,
-  err: null,
+  errMessage: null,
 }
 
 export const postReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'TOGGLE_FETCH':
-      return { ...state, isFetching: !state.isFetching }
+    case 'FETCH_START':
+      return { ...state, isFetching: true }
     case 'FETCH_SUCCESSFUL':
-      return { ...state, fetchedData: action.payload }
+      return { ...state, fetchedData: action.payload, isFetching: false }
     case 'FETCH_FAILURE':
-      return { ...state, err: action.payload }
+      return { ...state, errMessage: action.payload, isFetching: false }
     default:
       return state
   }

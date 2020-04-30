@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const isFetching = () => ({
+export const startFetch = () => ({
   type: 'FETCH_START',
 })
 
@@ -14,11 +14,14 @@ export const fetchFailure = (err) => ({
   payload: err,
 })
 
-const axiosFetch = async () => {
-  await axios
-    .get('https://jsonplaceholder.typicode.com/posts')
-    .then(async (res) => await fetchData(res.data.slice(0, 1)))
-    .catch((err) => fetchError(err.response.status))
+export const axiosFetch = () => {
+  return async (dispatch) => {
+    dispatch(startFetch())
+    await axios
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .then((res) => dispatch(fetchSuccessful(res.data)))
+      .catch((err) => dispatch(fetchFailure(err)))
+  }
 }
 
 export const toggleFetch = () => ({ type: 'TOGGLE_FETCH' })

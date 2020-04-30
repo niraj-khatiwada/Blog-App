@@ -1,35 +1,15 @@
 import React, { useEffect } from 'react'
-import axios from 'axios'
 
+import { axiosFetch } from '../reducers/Posts/posts.actions'
 import { connect } from 'react-redux'
-import {
-  toggleFetch,
-  fetchSuccessful,
-  fetchFailure,
-} from '../reducers/Posts/posts.actions'
 
-function PostList({
-  isFetching,
-  toggleFetch,
-  fetchData,
-  err,
-  fetchError,
-  fetchedData,
-}) {
+function PostList({ startAxiosFetch }) {
   useEffect(() => {
-    const axiosFetch = async () => {
-      await axios
-        .get('https://jsonplaceholder.typicode.com/posts')
-        .then(async (res) => await fetchData(res.data.slice(0, 1)))
-        .catch((err) => fetchError(err.response.status))
-    }
-    axiosFetch()
-  }, [isFetching])
-
+    startAxiosFetch()
+  }, [])
   return (
     <div>
-      <h1>{fetchedData[0].id}</h1>
-      <button onClick={() => toggleFetch()}>click</button>
+      <button>click</button>
     </div>
   )
 }
@@ -37,13 +17,11 @@ function PostList({
 const mapStateToProps = (state) => ({
   isFetching: state.post.isFetching,
   fetchedData: state.post.fetchedData,
-  err: state.post.err,
+  errorMessage: state.post.errMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleFetch: () => dispatch(toggleFetch()),
-  fetchData: (data) => dispatch(fetchSuccessful(data)),
-  fetchError: (err) => dispatch(fetchFailure(err)),
+  startAxiosFetch: () => dispatch(axiosFetch()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList)

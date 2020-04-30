@@ -1,10 +1,11 @@
 import React from 'react'
 import './App.css'
+import Root from './components/Root.component'
 
 function App() {
   return (
     <div className="App">
-      <h1>ashjbas</h1>
+      <Root />
     </div>
   )
 }

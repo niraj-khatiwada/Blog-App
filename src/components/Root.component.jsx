@@ -1,29 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import PostList from './PostList.component'
 import withSpinner from './Spinner/withSpinner.component'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { selectIsFetching } from '../reducers/Posts/posts.selectors'
 
+import { axiosFetch } from '../reducers/Posts/posts.actions'
+
 import { Route } from 'react-router-dom'
 
 const PostListWithSpinner = withSpinner(PostList)
 
-function Root({ isfetching }) {
-  const [isLoading, setLoading] = useState(isfetching)
+function Root({ isFetching, startAxiosFetch }) {
+  useEffect(() => {
+    startAxiosFetch()
+  }, [startAxiosFetch])
   return (
     <div>
       <Route
         exact
         path="/"
-        render={() => <PostListWithSpinner isFetching={isLoading} />}
+        render={() => <PostListWithSpinner isFetching={isFetching} />}
       />
     </div>
   )
 }
 
 const mapStateToProps = createStructuredSelector({
-  isfetching: selectIsFetching,
+  isFetching: selectIsFetching,
 })
 
-export default connect(mapStateToProps)(Root)
+const mapDispatchToProps = (dispatch) => ({
+  startAxiosFetch: () => dispatch(axiosFetch()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root)
